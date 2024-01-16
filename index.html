@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Sobreaviso</title>
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="./assets/css/reset.css">
+    <link rel="stylesheet" href="./assets/css/main.css">
+
+    <link rel="shortcut icon" href="assets/img/icon/favicon.ico" type="image/x-icon">
+
+</head>
+
+<body>
+    <header>
+        <div class="logo"><img src="assets/img/logo.png" alt="Logo SISCOM"></div>
+        <div class="title">
+            <h1>Calculadora Sobreaviso</h1>
+        </div>
+    </header>
+
+    <main>
+        <form class="form">
+            <div class="employee-data">
+                <label for="select-job">Função: </label>
+                <select name="select-job" id="select-job" required>
+                    <option value=""></option>
+                    <option value="aux-2p">Auxiliar Técnico 2P</option>
+                    <option value="aux-3p">Auxiliar Técnico 3P</option>
+                    <option value="tec-3p">Técnico 3P</option>
+                </select>
+            </div>
+
+            <div class="employee-data">
+                <label for="input-days">Quantidade de dias: </label>
+                <input type="number" name="input-days" id="input-days" value="7">
+            </div>
+
+            <div class="employee-data">
+                <label for="input-uteis">Quantidade de dias úteis: </label>
+                <input type="number" name="input-uteis" id="input-uteis" value="5">
+            </div>
+
+            <div class="employee-data">
+                <label for="input-50percet">Horas 50%: </label>
+                <input type="number" name="input-50percent" id="input-50percent">
+            </div>
+
+            <div class="employee-data">
+                <label for="input-80percent">Horas 80%: </label>
+                <input type="number" name="input-80percent" id="input-80percent">
+            </div>
+
+            <div class="employee-data">
+                <label for="input-100percent">Horas 100%: </label>
+                <input type="number" name="input-100percent" id="input-100percent">
+            </div>
+
+            <div class="employee-data">
+                <label for="input-compensacao">Período de Compensação? </label>
+                <input type="checkbox" name="input-compensacao" id="input-compensacao">
+            </div>
+
+            <div class="buttons">
+                <button type="reset" id="btn-reset">Limpar</button>
+                <button type="submit" id="btn-calculate">Calcular</button>
+            </div>
+
+        </form>
+
+        <section>
+            <h1>Valores a serem recebidos</h1>
+            <p>Salário Base: <span class="salario-base"></span></p>
+            <p>Valor da Hora: <span class="valor-hora"></span></p>
+            <p>Valor da Hora de Sobreaviso: <span class="valor-hora-sobreaviso"></span></p>
+            <p>Quantidade de horas a disposição: <span class="hora-disposicao"></span></p>
+            <p>--------------------------------</p>
+            <p>Valor de horas a disposição: <span class="valor-hora-disposicao span-bold"></span></p>
+            <p>Valor de Horas a 50%: <span class="hora-50percent span-bold"></span></p>
+            <p>Valor de Horas a 80%: <span class="hora-80percent span-bold"></span></p>
+            <p>Valor de Horas a 100%: <span class="hora-100percent span-bold"></span></p>
+        </section>
+
+    </main>
+
+    <script src="assets/js/main.js"></script>
+</body>
+
+</html>

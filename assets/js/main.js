@@ -20,7 +20,7 @@ const spnValorHora = document.querySelector('.valor-hora');
 const spnValorHoraSobreaviso = document.querySelector('.valor-hora-sobreaviso');
 
 btnReset.addEventListener('click', () => {
-    limpaCanmpos()
+    limpaCampos()
     reset();
 })
 
@@ -28,24 +28,30 @@ btnCalculate.addEventListener('click', e => {
     e.preventDefault();
 
     const isChecked = inputCompensacao.checked;
+
     const salarioBase = getSalario(job.value);
+    const salarioComPericulosidade = getSalarioComPericulosidade(salarioBase)
+
     const valorHora = getValorHora(salarioBase);
+    const valorHoraComPericulosidade = getValorHoraComPericulosidade(salarioComPericulosidade)
     const valorHoraSobreaviso = getValorHoraSobreaviso(salarioBase);
-    const totalHoras = getHorasDisposicao(dias.value, uteis.value, isChecked) - input50Percent.value - input80Percent.value - input100Percent.value;
-    const valorPeriodoDisposicao = getvalorPeriodoDisposicao(valorHoraSobreaviso, totalHoras);
-    const hora50Percent = getHora50Percent(valorHora, input50Percent.value);
-    const hora80Percent = getHora80Percent(valorHora, input80Percent.value);
-    const hora100Percent = getHora100Percent(valorHora, input100Percent.value);
+    
+    const quantidadeHorasDisposicao = getHorasDisposicao(dias.value, uteis.value, isChecked) - input50Percent.value - input80Percent.value - input100Percent.value;
+   
+    const valorPeriodoDisposicao = getvalorPeriodoDisposicao(valorHoraSobreaviso, quantidadeHorasDisposicao);
+    const valorHora50Percent = getHora50Percent(valorHoraComPericulosidade, input50Percent.value);
+    const valorHora80Percent = getHora80Percent(valorHoraComPericulosidade, input80Percent.value);
+    const valorHora100Percent = getHora100Percent(valorHoraComPericulosidade, input100Percent.value);
 
 
-    spnSalarioBase.innerHTML = `R$ ${salarioBase.toFixed(2).replace('.', ',')}`;
-    spnValorHora.innerHTML = `R$ ${valorHora.toFixed(2).replace('.', ',')}`;
-    spnValorHoraSobreaviso.innerHTML = `R$ ${valorHoraSobreaviso.toFixed(2).replace('.', ',')}`;
-    spnHoraDisposicao.innerHTML = totalHoras.toFixed(2).replace('.', ',');
-    spnValorHoraDisposicao.innerHTML = `R$ ${valorPeriodoDisposicao.toFixed(2).replace('.', ',')}`;
-    spnHora50Percent.innerHTML = `R$ ${hora50Percent.toFixed(2).replace('.', ',')}`;
-    spnHora80Percent.innerHTML = `R$ ${hora80Percent.toFixed(2).replace('.', ',')}`;
-    spnHora100Percent.innerHTML = `R$ ${hora100Percent.toFixed(2).replace('.', ',')}`;
+    spnSalarioBase.innerHTML = exibirValoresEmReal(salarioBase);
+    spnValorHora.innerHTML = exibirValoresEmReal(valorHora);
+    spnValorHoraSobreaviso.innerHTML = exibirValoresEmReal(valorHoraSobreaviso);
+    spnHoraDisposicao.innerHTML = exibirValoresEmHora(quantidadeHorasDisposicao);
+    spnValorHoraDisposicao.innerHTML = exibirValoresEmReal(valorPeriodoDisposicao);
+    spnHora50Percent.innerHTML = exibirValoresEmReal(valorHora50Percent);
+    spnHora80Percent.innerHTML = exibirValoresEmReal(valorHora80Percent);
+    spnHora100Percent.innerHTML = exibirValoresEmReal(valorHora100Percent);
 
 })
 
@@ -56,7 +62,11 @@ function getSalario(job) {
     if (job === 'tec-3p') return 4230.15;
 }
 
-function limpaCanmpos(){
+function getSalarioComPericulosidade(salario){
+    return salario * 1.30
+}
+
+function limpaCampos(){
     spnSalarioBase.innerHTML = '';
     spnValorHora.innerHTML = '';
     spnValorHoraSobreaviso.innerHTML = '';
@@ -71,20 +81,24 @@ function getValorHora(salario) {
     return salario / 220;
 }
 
+function getValorHoraComPericulosidade(salario) {
+    return salario / 220;
+}
+
 function getValorHoraSobreaviso(salario) {
     return salario / 220 / 3;
 }
 
-function getHora50Percent(valorHora, hora) {
-    return valorHora * hora * 1.5;
+function getHora50Percent(valorHoraComPericulosidade, hora) {
+    return valorHoraComPericulosidade * hora * 1.5;
 }
 
-function getHora80Percent(valorHora, hora) {
-    return valorHora * hora * 1.8;
+function getHora80Percent(valorHoraComPericulosidade, hora) {
+    return valorHoraComPericulosidade * hora * 1.8;
 }
 
-function getHora100Percent(valorHora, hora) {
-    return valorHora * hora * 2.0;
+function getHora100Percent(valorHoraComPericulosidade, hora) {
+    return valorHoraComPericulosidade * hora * 2.0;
 }
 
 function getHorasDisposicao(diasTotais, diasUteis, compensacao) {
@@ -108,4 +122,12 @@ function getHorasDisposicao(diasTotais, diasUteis, compensacao) {
 
 function getvalorPeriodoDisposicao(valorHoraSobreaviso, totalHoras){
     return valorHoraSobreaviso * totalHoras;
+}
+
+function exibirValoresEmReal(valor){
+    return `R$ ${valor.toFixed(2).replace('.', ',')}`;
+}
+
+function exibirValoresEmHora(valor){
+    return valor.toFixed(2).replace('.', ',');
 }
